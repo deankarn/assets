@@ -41,9 +41,23 @@ func Init(config *Config) {
 		config.AssetPath = defaultAssetPath
 	}
 
+	if config.RunMode == ProductionMode {
+		parseProdAssets()
+	} else {
+		parseDevAssets()
+	}
+
 	fileServer = http.FileServer(http.Dir(config.AssetPath) + "/..")
 
 	config.ServeMux.Handle(config.AssetURL, http.HandlerFunc(serveAssets))
+}
+
+func parseDevAssets() {
+
+}
+
+func parseProdAssets() {
+
 }
 
 func serveAssets(w http.ResponseWriter, r *http.Request) {
